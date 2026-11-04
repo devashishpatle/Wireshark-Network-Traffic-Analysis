@@ -144,3 +144,97 @@ Packet capture is the process of recording network traffic travelling through a 
 5. Click **Save**.
 
 ![Packet Capture](01-packet-capture.png)
+
+## 🟢 Step 4: Analyze TCP Three-Way Handshake
+
+The TCP Three-Way Handshake is a process used to establish a reliable connection between a client and a server before data transmission begins.
+
+### 1. Understand TCP Three-Way Handshake
+
+The TCP handshake consists of three steps:
+
+**1. SYN (Synchronize)**
+
+- The client sends a SYN packet to the server.
+- It requests to establish a TCP connection.
+
+**2. SYN-ACK (Synchronize-Acknowledge)**
+
+- The server responds with a SYN-ACK packet.
+- It acknowledges the client's request and sends its own synchronization request.
+
+**3. ACK (Acknowledge)**
+
+- The client sends an ACK packet to the server.
+- The TCP connection is successfully established.
+
+### TCP Three-Way Handshake Diagram
+
+```text
+       CLIENT                         SERVER
+          |                              |
+          | -------- SYN -------------> |
+          |                              |
+          | <------ SYN-ACK ------------ |
+          |                              |
+          | -------- ACK -------------> |
+          |                              |
+          |                       Connection
+          |                        Established
+```
+
+### 2. Capture TCP Traffic
+
+1. Open Wireshark.
+2. Select your active Wi-Fi or Ethernet interface.
+3. Start packet capturing.
+4. Open your web browser.
+5. Visit a website such as:
+
+   https://example.com
+
+6. Return to Wireshark.
+7. Click the red **Stop** button.
+
+### 3. Apply TCP Display Filters
+
+Enter the following filter in the Wireshark display filter bar:
+
+**Filter 1: Display SYN Packets**
+
+```text
+tcp.flags.syn == 1
+```
+
+This filter displays TCP packets with the SYN flag enabled.
+
+**Filter 2: Display SYN and ACK Packets**
+
+```text
+tcp.flags.syn == 1 || tcp.flags.ack == 1
+```
+
+This filter displays TCP packets with either the SYN or ACK flag enabled.
+
+### 4. Analyze TCP Handshake Packets
+
+1. Find a TCP connection in the captured packets.
+2. Identify the initial SYN packet.
+3. Find the corresponding SYN-ACK response.
+4. Identify the final ACK packet.
+5. Select each packet and expand the **Transmission Control Protocol (TCP)** section in the Packet Details pane.
+6. Inspect the TCP Flags field.
+
+| Packet | TCP Flag | Description |
+|---|---|---|
+| First | SYN | Client requests connection |
+| Second | SYN, ACK | Server acknowledges request |
+| Third | ACK | Client confirms connection |
+
+**Note:** Match packets using their source/destination IP addresses and TCP port numbers. The combined filter may display unrelated ACK packets too.
+
+![TCP Handshake Analysis](02-tcp-handshake.png)
+
+### 🎯 Result
+
+Successfully captured and analyzed TCP packets using Wireshark. Identified the SYN, SYN-ACK, and ACK packets and understood how a TCP connection is established between a client and a server.
