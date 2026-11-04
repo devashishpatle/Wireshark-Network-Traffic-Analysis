@@ -314,3 +314,132 @@ Observe the following information:
 ### 🎯 Result
 
 Successfully generated DNS traffic using the `nslookup` command and captured DNS queries and responses using Wireshark. Analyzed domain names, DNS query types, response IP addresses, and DNS server information.
+
+## 🟢 Step 6: Analyze HTTP and HTTPS Traffic
+
+HTTP (Hypertext Transfer Protocol) and HTTPS (Hypertext Transfer Protocol Secure) are communication protocols used to transfer data between web browsers and web servers.
+
+### 📌 Difference Between HTTP and HTTPS
+
+| Feature | HTTP | HTTPS |
+|---|---|---|
+| Full Form | Hypertext Transfer Protocol | Hypertext Transfer Protocol Secure |
+| Default Port | 80 | 443 |
+| Security | Not encrypted | Encrypted using TLS |
+| Data Transfer | Plaintext (when HTTP is used directly) | Encrypted application data |
+| Security Level | Less secure | More secure |
+
+---
+
+### A. HTTP Traffic Analysis
+
+HTTP is used for communication between a browser and a web server. Standard HTTP traffic is generally transmitted without encryption.
+
+#### 1. Start Packet Capture
+
+1. Open Wireshark.
+2. Select your active Wi-Fi or Ethernet interface.
+3. Start a new packet capture.
+
+#### 2. Generate HTTP Traffic
+
+1. Open your web browser.
+2. Visit the following HTTP test website:
+
+   🌐 http://neverssl.com/
+
+3. Wait for the webpage to load.
+4. Return to Wireshark.
+5. Click the red **Stop** button.
+
+#### 3. Apply HTTP Display Filter
+
+Enter the following filter in the Wireshark display filter bar:
+
+```text
+http
+```
+
+Press Enter to display HTTP packets.
+
+#### 4. Analyze HTTP Packets
+
+Inspect the following information:
+
+- HTTP Request Method (GET, POST).
+- Request URI.
+- Hostname.
+- HTTP Response Status Code.
+- User-Agent.
+- HTTP Headers.
+
+If HTTP traffic is visible, select a packet and expand the **Hypertext Transfer Protocol** section in the Packet Details pane.
+
+![HTTP Traffic Analysis](04-http-analysis.png)
+
+---
+
+### B. HTTPS Traffic Analysis
+
+HTTPS provides secure communication between browsers and web servers by using TLS encryption.
+
+It protects application data from being read by unauthorized parties during transmission.
+
+#### 1. Start a New Packet Capture
+
+1. Open Wireshark.
+2. Select your active network interface.
+3. Start a new packet capture.
+
+#### 2. Generate HTTPS Traffic
+
+1. Open your web browser.
+2. Visit the following HTTPS website:
+
+   🌐 https://example.com/
+
+3. Wait for the webpage to load.
+4. Return to Wireshark.
+5. Click the red **Stop** button.
+
+#### 3. Apply HTTPS/TLS Display Filter
+
+Enter the following filter:
+
+```text
+tls
+```
+
+Press Enter to display TLS packets.
+
+#### 4. Analyze TLS Packets
+
+Inspect the following information:
+
+- TLS Handshake.
+- Client Hello.
+- Server Hello.
+- Certificate information, when visible.
+- Encrypted Application Data.
+- Source and Destination IP addresses.
+- Source and Destination Ports.
+
+You may observe TLS handshake packets and encrypted application traffic.
+
+![HTTPS Traffic Analysis](05-https-analysis.png)
+
+---
+
+### 📊 HTTP vs HTTPS Packet Analysis
+
+| Analysis | HTTP | HTTPS |
+|---|---|---|
+| Display Filter | `http` | `tls` |
+| Default Port | 80 | 443 |
+| Request Details | Generally readable | Encrypted |
+| Application Data | Generally visible | Encrypted |
+| TLS Handshake | No | Yes |
+
+### 🎯 Result
+
+Successfully captured and analyzed HTTP and HTTPS traffic using Wireshark. Identified HTTP requests and responses, examined TLS handshake packets, and understood how HTTPS protects application data through encryption.
