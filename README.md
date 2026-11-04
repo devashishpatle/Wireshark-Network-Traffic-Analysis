@@ -238,3 +238,79 @@ This filter displays TCP packets with either the SYN or ACK flag enabled.
 ### 🎯 Result
 
 Successfully captured and analyzed TCP packets using Wireshark. Identified the SYN, SYN-ACK, and ACK packets and understood how a TCP connection is established between a client and a server.
+
+## 🟢 Step 5: Analyze DNS Traffic
+
+DNS (Domain Name System) is used to translate human-readable domain names into IP addresses that computers use to communicate over a network.
+
+**Example:**
+
+```text
+google.com → IP Address
+```
+
+### 1. Generate DNS Traffic Using Command Prompt
+
+1. Press `Windows + R`.
+2. Type `cmd` and press Enter.
+3. Enter the following command:
+
+```bash
+nslookup example.com
+```
+
+4. Press Enter.
+5. Observe the DNS lookup result, including the DNS server and resolved IP address.
+
+### 2. Capture DNS Traffic in Wireshark
+
+1. Open Wireshark.
+2. Select your active Wi-Fi or Ethernet interface.
+3. Start packet capturing **before running the DNS command again**.
+4. Open Command Prompt.
+5. Execute the following command:
+
+```bash
+nslookup example.com
+```
+
+6. Wait for the DNS query and response.
+7. Return to Wireshark.
+8. Click the red **Stop** button.
+
+### 3. Apply DNS Display Filter
+
+Enter the following filter in the Wireshark display filter bar:
+
+```text
+dns
+```
+
+Press Enter to display DNS packets.
+
+### 4. Analyze DNS Packets
+
+Select a DNS packet and expand the **Domain Name System (DNS)** section in the Packet Details pane.
+
+Observe the following information:
+
+- **Query Name:** Domain name requested by the client.
+- **Query Type:** Type of DNS record requested (A, AAAA, etc.).
+- **Response IP Address:** IP address returned by the DNS server.
+- **DNS Server:** Server responsible for processing the DNS request.
+
+### 5. Important DNS Display Filters
+
+| Display Filter | Description |
+|---|---|
+| `dns` | Displays all DNS packets |
+| `dns.flags.response == 0` | Displays DNS queries |
+| `dns.flags.response == 1` | Displays DNS responses |
+| `dns.qry.name == "example.com"` | Filters queries for example.com |
+| `dns.a` | Displays DNS A records |
+
+![DNS Traffic Analysis](03-dns-analysis.png)
+
+### 🎯 Result
+
+Successfully generated DNS traffic using the `nslookup` command and captured DNS queries and responses using Wireshark. Analyzed domain names, DNS query types, response IP addresses, and DNS server information.
