@@ -443,3 +443,74 @@ You may observe TLS handshake packets and encrypted application traffic.
 ### 🎯 Result
 
 Successfully captured and analyzed HTTP and HTTPS traffic using Wireshark. Identified HTTP requests and responses, examined TLS handshake packets, and understood how HTTPS protects application data through encryption.
+
+## 🟢 Step 7: Analyze ICMP Traffic
+
+ICMP (Internet Control Message Protocol) is a network-layer protocol used for network diagnostics, error reporting, and connectivity testing.
+
+The `ping` command uses ICMP Echo Request and Echo Reply packets to check whether a destination device is reachable.
+
+### 1. Start Packet Capture
+
+1. Open Wireshark.
+2. Select your active Wi-Fi or Ethernet network interface.
+3. Click the interface to start capturing network traffic.
+
+### 2. Generate ICMP Traffic Using Command Prompt
+
+1. Press `Windows + R`.
+2. Type `cmd` and press Enter.
+3. Execute the following command:
+
+```bash
+ping -n 4 8.8.8.8
+```
+
+4. Press Enter.
+5. Windows will send four ICMP Echo Request packets to Google's public DNS server (8.8.8.8).
+6. Observe the ping responses in Command Prompt.
+
+### 3. Stop Packet Capture
+
+1. Return to the Wireshark application.
+2. Click the red **Stop** button.
+3. Your ICMP packet capture will now be available for analysis.
+
+### 4. Apply ICMP Display Filter
+
+Enter the following filter in the Wireshark display filter bar:
+
+```text
+icmp
+```
+
+Press Enter to display ICMP packets.
+
+### 5. Analyze ICMP Packets
+
+You should see the following ICMP packet types if the network permits them:
+
+**1. Echo Request (Type 8)**
+
+- Sent by the source device.
+- Requests a response from the destination device.
+- Used to check network connectivity.
+
+**2. Echo Reply (Type 0)**
+
+- Sent by the destination device.
+- Responds to the Echo Request.
+- Indicates that the destination is reachable.
+
+### 6. ICMP Packet Analysis Table
+
+| ICMP Type | Packet Name | Description |
+|---|---|---|
+| Type 8 | Echo Request | Request sent to the destination |
+| Type 0 | Echo Reply | Response received from the destination |
+
+![ICMP Traffic Analysis](screenshots/06-icmp-analysis.png)
+
+### 🎯 Result
+
+Successfully generated ICMP traffic using the Windows `ping` command and captured ICMP Echo Request and Echo Reply packets using Wireshark.
