@@ -514,3 +514,222 @@ You should see the following ICMP packet types if the network permits them:
 ### 🎯 Result
 
 Successfully generated ICMP traffic using the Windows `ping` command and captured ICMP Echo Request and Echo Reply packets using Wireshark.
+
+## 🟢 Step 8: Analyze FTP Traffic
+
+FTP (File Transfer Protocol) is a standard network protocol used to transfer files between computers over a network.
+
+FTP commonly uses **TCP port 21** for control connections.
+
+### 1. Understand FTP Protocol
+
+FTP is used for:
+- Uploading files to a server.
+- Downloading files from a server.
+- Managing files and directories.
+- Communication between FTP clients and servers.
+
+### 2. Open Wireshark
+
+1. Open Wireshark.
+2. Open an existing authorized FTP capture file (`.pcap` or `.pcapng`) or start capturing traffic from your own FTP lab server.
+3. Make sure the capture contains FTP-related traffic.
+
+### 3. Apply FTP Display Filter
+
+Enter the following filter in the Wireshark display filter bar:
+
+```text
+ftp || tcp.port == 21
+```
+
+Press Enter to display FTP-related packets and TCP traffic using port 21.
+
+### 4. Analyze FTP Traffic
+
+Inspect the following information:
+
+- **FTP Control Connection:** Communication between the FTP client and server.
+- **Client Address:** IP address of the FTP client.
+- **Server Address:** IP address of the FTP server.
+- **TCP Port 21:** Default FTP control connection port.
+- **FTP Commands:** Commands exchanged between client and server, if visible.
+
+### 5. Common FTP Commands
+
+| FTP Command | Description |
+|---|---|
+| USER | Specifies the username |
+| PASS | Sends the password |
+| LIST | Lists files and directories |
+| RETR | Downloads a file |
+| STOR | Uploads a file |
+| QUIT | Closes the FTP connection |
+
+**Note:** If an FTP server or authorized FTP capture file is unavailable, mark this activity as **Not Performed**. Do not create or claim screenshots of traffic that you did not capture.
+
+## 🟢 Step 9: Perform Attack Traffic Analysis
+
+Attack Traffic Analysis is the process of examining network packets to identify unusual communication patterns, suspicious activities, and potential network security threats.
+
+In this project, Wireshark is used to investigate possible port scanning, ICMP flooding, and suspicious DNS activity without performing any actual attacks.
+
+### A. Possible Port Scanning Analysis
+
+Port scanning is a technique used to identify open ports and available services on a target system.
+
+#### 1. Apply TCP SYN Filter
+
+Open Wireshark and enter the following display filter:
+
+```text
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+```
+
+Press Enter to display initial TCP SYN packets.
+
+#### 2. Analyze Suspicious SYN Traffic
+
+Look for the following patterns:
+
+- Multiple TCP connection requests from a single source IP.
+- Connection attempts targeting different destination ports.
+- Repeated connection attempts within a short period.
+- Large numbers of unanswered SYN requests.
+- Unusual connection patterns.
+
+#### 3. Port Scanning Indicators
+
+| Indicator | Description |
+|---|---|
+| Multiple SYN Packets | Repeated connection attempts |
+| Multiple Destination Ports | Possible port scanning activity |
+| Single Source IP | One source contacting many ports |
+| Unanswered SYN Requests | Connections not successfully established |
+
+**Note:** A SYN packet alone does not indicate a port scan. Normal network communication also uses SYN packets.
+
+---
+
+### B. Possible ICMP Flood Analysis
+
+An ICMP flood is a type of Denial-of-Service (DoS) attack in which excessive ICMP packets are sent toward a target system.
+
+#### 1. Apply ICMP Filter
+
+Enter the following display filter:
+
+```text
+icmp
+```
+
+Press Enter to display ICMP packets.
+
+#### 2. Analyze ICMP Traffic
+
+Look for the following indicators:
+
+- High numbers of ICMP packets within a short period.
+- Repeated Echo Request packets.
+- Multiple ICMP packets originating from the same source.
+- Unusual increases in ICMP traffic.
+- Large numbers of requests without corresponding replies.
+
+#### 3. ICMP Traffic Indicators
+
+| Indicator | Description |
+|---|---|
+| High ICMP Packet Count | Possible abnormal traffic volume |
+| Repeated Echo Requests | Frequent connectivity requests |
+| Single Source IP | Concentrated traffic from one source |
+| Missing Echo Replies | Possible packet loss or filtering |
+
+**Note:** Frequent ICMP packets do not automatically indicate an attack. Network monitoring and diagnostic tools may generate similar traffic.
+
+---
+
+### C. Possible Suspicious DNS Traffic Analysis
+
+DNS traffic analysis helps identify unusual domain name resolution patterns that may indicate suspicious network activity.
+
+#### 1. Apply DNS Filter
+
+Enter the following display filter:
+
+```text
+dns
+```
+
+Press Enter to display DNS queries and responses.
+
+#### 2. Analyze DNS Traffic
+
+Look for the following suspicious patterns:
+
+- Repeated DNS queries for the same domain.
+- Queries for unexpected or unfamiliar domains.
+- Unusually long domain names.
+- High numbers of DNS requests in a short period.
+- Frequent failed DNS lookups.
+
+#### 3. Useful DNS Display Filters
+
+| Display Filter | Description |
+|---|---|
+| `dns` | Displays DNS traffic |
+| `dns.flags.response == 0` | Displays DNS queries |
+| `dns.flags.response == 1` | Displays DNS responses |
+| `dns.flags.rcode == 3` | Displays NXDOMAIN responses |
+| `dns.qry.name` | Displays packets containing DNS query names |
+
+#### 4. Suspicious DNS Indicators
+
+| Indicator | Description |
+|---|---|
+| Repeated DNS Queries | Possible automated communication |
+| Unusual Domain Names | Potential suspicious destinations |
+| Long Domain Names | Possible encoded data or unusual applications |
+| High DNS Request Volume | Possible automated DNS activity |
+| Multiple NXDOMAIN Responses | Repeated queries for nonexistent domains |
+
+**Note:** These patterns are indicators for further investigation and do not independently prove malicious activity.
+
+---
+
+### D. Analyze Network Traffic Statistics
+
+Wireshark provides statistical tools to investigate traffic patterns.
+
+#### 1. Protocol Hierarchy
+
+Navigate to:
+
+`Statistics → Protocol Hierarchy`
+
+This displays the distribution of protocols in the captured traffic.
+
+#### 2. Conversations
+
+Navigate to:
+
+`Statistics → Conversations`
+
+This displays communication between network endpoints.
+
+#### 3. I/O Graphs
+
+Navigate to:
+
+`Statistics → I/O Graphs`
+
+This helps visualize network traffic volume over time and identify unusual spikes.
+
+![Attack Traffic Analysis](08-attack-traffic-analysis.png)
+
+### 🎯 Result
+
+Examined captured network traffic using Wireshark display filters to investigate possible port scanning, abnormal ICMP activity, and suspicious DNS communication patterns.
+
+The analysis focused on recognizing potential security indicators without launching attacks.
+
+**Important:** If no suspicious activity is observed, document the result as **No Suspicious Traffic Observed** rather than claiming an attack was detected.
