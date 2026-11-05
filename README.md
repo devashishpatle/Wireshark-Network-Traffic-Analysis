@@ -509,7 +509,7 @@ You should see the following ICMP packet types if the network permits them:
 | Type 8 | Echo Request | Request sent to the destination |
 | Type 0 | Echo Reply | Response received from the destination |
 
-![ICMP Traffic Analysis](screenshots/06-icmp-analysis.png)
+![ICMP Traffic Analysis](06-icmp-analysis.png)
 
 ### 🎯 Result
 
